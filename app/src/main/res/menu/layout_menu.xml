@@ -16,4 +16,25 @@
     <item
         android:id="@+id/room_3"
         android:title="Room 3" />
+    <item
+        android:id="@+id/room_4"
+        android:title="Room 4" />
+    <item
+        android:id="@+id/room_5"
+        android:title="Room 5" />
+    <item
+        android:id="@+id/room_6"
+        android:title="Room 6" />
+    <item
+        android:id="@+id/room_7"
+        android:title="Room 7" />
+    <item
+        android:id="@+id/room_8"
+        android:title="Room 8" />
+    <item
+        android:id="@+id/room_9"
+        android:title="Room 9" />
+    <item
+        android:id="@+id/room_10"
+        android:title="Room 10" />
 </menu>
