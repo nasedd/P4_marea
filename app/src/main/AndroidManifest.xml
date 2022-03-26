@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.P4_mareu">
         <activity
+            android:name=".user_interface.NewMeetingActivity"
+            android:exported="false"
+            android:label="Ajouter une reunion"/>
+        <activity
             android:name=".user_interface.MainActivity"
             android:exported="true">
             <intent-filter>
