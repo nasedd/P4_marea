@@ -3,6 +3,7 @@ package fr.nazodev.p4_mareu.user_interface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -49,8 +50,9 @@ public class MeetingFragment extends Fragment {
 
     private void initList(){
 
-        List<String> meetingList = Arrays.asList("Meeting A", "Meeting B", "Meeting C", "Meeting D");
+        List<String> meetingList = Arrays.asList("Meeting A ooooooo", "Meeting B", "Meeting C", "Meeting D");
 
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(new RecyclerViewAdapter(meetingList));
 
     }

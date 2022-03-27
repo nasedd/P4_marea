@@ -11,26 +11,24 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.service.MeetingApiService;
 
 public class NewMeetingActivity extends AppCompatActivity {
 
-    private List<String> emailList = DI.generateService().getMyList();
+    private MeetingApiService apiService = DI.getApiService();
+    private List<String> emailList = apiService.getEmailList();
 
 
     @Override
@@ -52,7 +50,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                     if(isEmailValidate(emailInput.getEditableText())){
-                        emailList.add(emailInput.getEditableText().toString());
+                        apiService.addEmail(emailInput.getEditableText().toString());
                         recyclerView.setAdapter(new ParticipantRecyclerViewAdapter(emailList));
                         emailInput.setText("");
                     }else {
@@ -97,7 +95,7 @@ public class NewMeetingActivity extends AppCompatActivity {
                     materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String timeSelected = materialTimePicker.getHour() + ":" + materialTimePicker.getMinute();
+                            String timeSelected = materialTimePicker.getHour() + "h" + materialTimePicker.getMinute();
                             editText.setText(timeSelected);
                         }
 

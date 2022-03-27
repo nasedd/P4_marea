@@ -3,40 +3,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="70dp">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ic_disc"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_disc" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_disc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/ic_disc"
         app:layout_constraintVertical_bias="0.518"
         app:srcCompat="@drawable/ic_delete" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="subject is toooo long"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView_email"
+        app:layout_constraintEnd_toStartOf="@+id/tiret"
+        app:layout_constraintStart_toEndOf="@+id/ic_disc"
+        app:layout_constraintTop_toTopOf="@+id/ic_disc" />
+
+    <TextView
+        android:id="@+id/tiret"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="Réunion A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text=" - "
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_subject"
+        app:layout_constraintEnd_toStartOf="@+id/textView_date"
+        app:layout_constraintStart_toEndOf="@+id/textView_subject"
+        app:layout_constraintTop_toTopOf="@+id/textView_subject" />
+
+    <TextView
+        android:id="@+id/textView_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="27 mars"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tiret"
+        app:layout_constraintEnd_toStartOf="@+id/tiret2"
+        app:layout_constraintStart_toEndOf="@+id/tiret"
+        app:layout_constraintTop_toTopOf="@+id/tiret" />
+
+    <TextView
+        android:id="@+id/tiret2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_date"
+        app:layout_constraintEnd_toStartOf="@+id/textView_time"
+        app:layout_constraintStart_toEndOf="@+id/textView_date"
+        app:layout_constraintTop_toTopOf="@+id/textView_date" />
+
+    <TextView
+        android:id="@+id/textView_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11h30"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tiret2"
+        app:layout_constraintEnd_toStartOf="@+id/tiret3"
+        app:layout_constraintStart_toEndOf="@+id/tiret2"
+        app:layout_constraintTop_toTopOf="@+id/tiret2" />
+
+    <TextView
+        android:id="@+id/tiret3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - "
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_time"
+        app:layout_constraintEnd_toStartOf="@+id/textView_location"
+        app:layout_constraintStart_toEndOf="@+id/textView_time"
+        app:layout_constraintTop_toTopOf="@+id/textView_time" />
+
+    <TextView
+        android:id="@+id/textView_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="room 10"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tiret3"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintStart_toEndOf="@+id/tiret3"
+        app:layout_constraintTop_toTopOf="@+id/tiret3" />
+
+    <TextView
+        android:id="@+id/textView_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="jean.yve@exemple.com, nadir.seddaoui@gmail.com, openclassroom@gmail.com"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_disc"
+        app:layout_constraintEnd_toEndOf="@+id/textView_location"
+        app:layout_constraintStart_toStartOf="@+id/textView_subject"
+        app:layout_constraintTop_toBottomOf="@+id/textView_subject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

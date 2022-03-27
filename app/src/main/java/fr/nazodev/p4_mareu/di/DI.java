@@ -1,8 +1,7 @@
 package fr.nazodev.p4_mareu.di;
 
 
-import fr.nazodev.p4_mareu.service.ParticipantApiService;
-import fr.nazodev.p4_mareu.service.ParticipantsListGenerator;
+import fr.nazodev.p4_mareu.service.MeetingApiService;
 
 /**
  * Dependency injector to get instance of services
@@ -10,9 +9,9 @@ import fr.nazodev.p4_mareu.service.ParticipantsListGenerator;
 
 public class DI {
 
-    static ParticipantApiService service = new ParticipantApiService();
+    static MeetingApiService service = new MeetingApiService();
 
-    public static ParticipantApiService generateService(){
+    public static MeetingApiService getApiService(){
         return service;
     }
 }

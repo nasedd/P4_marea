@@ -13,17 +13,15 @@ import java.util.List;
 
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.R;
-import fr.nazodev.p4_mareu.service.ParticipantApiService;
-import fr.nazodev.p4_mareu.service.ParticipantsListGenerator;
+import fr.nazodev.p4_mareu.service.MeetingApiService;
 
 public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<ParticipantRecyclerViewAdapter.MyViewHolder>{
 
-    private final List<String> items;
+    private final List<String> emailList;
 
-    public ParticipantRecyclerViewAdapter (List<String> myItems){
-        items = myItems;
+    public ParticipantRecyclerViewAdapter (List<String> emailList){
+        this.emailList = emailList;
     }
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView email;
@@ -44,23 +42,22 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String item = items.get(position);
-        holder.email.setText(items.get(position));
+        String item = emailList.get(position);
+        holder.email.setText(emailList.get(position));
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParticipantApiService apiService;
-                apiService = DI.generateService();
-                apiService.deleteItem(item);
+                MeetingApiService apiService;
+                apiService = DI.getApiService();
+                apiService.deleteEmail(item);
                 notifyItemRemoved(holder.getAdapterPosition());
-
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return emailList.size();
     }
 
 
