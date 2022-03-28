@@ -2,7 +2,6 @@ package fr.nazodev.p4_mareu.user_interface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), NewMeetingActivity.class);
+                Intent intent = new Intent(v.getContext(), AddNewMeetingActivity.class);
                 startActivity(intent);
 
             }

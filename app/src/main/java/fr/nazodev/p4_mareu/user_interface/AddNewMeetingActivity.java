@@ -9,10 +9,13 @@ import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -23,9 +26,10 @@ import java.util.List;
 
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.model.Meeting;
 import fr.nazodev.p4_mareu.service.MeetingApiService;
 
-public class NewMeetingActivity extends AppCompatActivity {
+public class AddNewMeetingActivity extends AppCompatActivity {
 
     private MeetingApiService apiService = DI.getApiService();
     private List<String> emailList = apiService.getEmailList();
@@ -68,13 +72,55 @@ public class NewMeetingActivity extends AppCompatActivity {
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.dropdown_room_item,dropdownList );
         dropdownLocation.setAdapter(arrayAdapter);
 
+
         //****************** set Date *******************************//
-        EditText editTextDate = findViewById(R.id.editTextDate);
-        setDate(editTextDate);
+        EditText dateEditText = findViewById(R.id.editTextDate);
+        setDate(dateEditText);
 
         //****************** set Time *******************************//
-        EditText editTextTime = findViewById(R.id.editTextTime);
-        setTime(editTextTime);
+        EditText timeEditText = findViewById(R.id.editTextTime);
+        setTime(timeEditText);
+
+        //********************** Validation button -> create the new meeting *********************//
+        EditText subject = findViewById(R.id.editTextSubject);
+        Button validationButton = findViewById(R.id.button_validation_new_meeting);
+        validationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(emailList.isEmpty()){
+                    emailInput.setError("at least one participants !");
+                    emailInput.requestFocus();
+                }else if(dropdownLocation.getEditableText().toString().equals("Choose the meeting room")){
+                    //Toast.makeText(AddNewMeetingActivity.this,"chose a room !",Toast.LENGTH_SHORT).show();
+                    dropdownLocation.setError("chose a meeting room !");
+                    dropdownLocation.requestFocus();
+                }else if(subject.getEditableText().toString().equals("")){
+                    subject.setError("subject required !");
+                    subject.requestFocus();
+                }else if(dateEditText.getEditableText().toString().equals("")){
+                    dateEditText.requestFocus();
+                }else if(timeEditText.getEditableText().toString().equals("")){
+                    timeEditText.requestFocus();
+                }else{
+                    apiService.addMeeting(new Meeting(
+                            emailList,
+                            dropdownLocation.getEditableText().toString(),
+                            subject.getEditableText().toString(),
+                            dateEditText.getEditableText().toString(),
+                            timeEditText.getEditableText().toString()
+                    ));
+                }
+
+            }
+        });
+
+        dropdownLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dropdownLocation.setError(null);
+            }
+        });
+
 
 
 

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Meeting {
 
-    List<String> participants;
-    String location;
-    String subject;
-    String date;
-    String time;
+    public List<String> participants;
+    public String location;
+    public String subject;
+    public String date;
+    public String time;
 
     public Meeting(List<String> participants, String location, String subject, String date, String time){
         this.participants = participants;

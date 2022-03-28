@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.P4_mareu">
         <activity
-            android:name=".user_interface.NewMeetingActivity"
+            android:name=".user_interface.AddNewMeetingActivity"
             android:exported="false"
             android:label="Ajouter une reunion"/>
         <activity

@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/ic_disc" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/delete_meeting_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:backgroundTint="#00FFFFFF"
@@ -110,7 +110,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tiret3"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintEnd_toStartOf="@+id/delete_meeting_button"
         app:layout_constraintStart_toEndOf="@+id/tiret3"
         app:layout_constraintTop_toTopOf="@+id/tiret3" />
 
