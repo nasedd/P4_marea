@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
+import fr.nazodev.p4_mareu.service.MeetingApiService;
 
 public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.MyViewHolder> {
 
+    private MeetingApiService apiService = DI.getApiService();
     private final List<Meeting> items;
     public MeetingRecyclerViewAdapter(List<Meeting> items){ this.items = items ;  }
 
@@ -47,11 +50,19 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.emails.setText(TextUtils.join(", ",items.get(position).participants)); //TexteUtils.join à la place de String.join ->API26 minimum
-        holder.subject.setText(items.get(position).subject);
-        holder.location.setText(items.get(position).location);
-        holder.date.setText(items.get(position).date);
-        holder.time.setText(items.get(position).time);
+        Meeting meeting = items.get(position);
+        holder.emails.setText(TextUtils.join(", ",meeting.participants)); //TexteUtils.join à la place de String.join ->API26 minimum
+        holder.subject.setText(meeting.subject);
+        holder.location.setText(meeting.location);
+        holder.date.setText(meeting.date);
+        holder.time.setText(meeting.time);
+        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiService.deleteMeeting(meeting);
+                notifyItemRemoved(holder.getAdapterPosition());
+            }
+        });
 
     }
 
