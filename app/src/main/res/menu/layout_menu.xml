@@ -9,32 +9,35 @@
     <!--    showaction retir un element de la liste deroulante pour l'item pour avour son propre icon-->
     <item
         android:id="@+id/room_1"
-        android:title="Room 1" />
+        android:title="@string/room_1" />
     <item
         android:id="@+id/room_2"
-        android:title="Room 2" />
+        android:title="@string/room_2" />
     <item
         android:id="@+id/room_3"
-        android:title="Room 3" />
+        android:title="@string/room_3" />
     <item
         android:id="@+id/room_4"
-        android:title="Room 4" />
+        android:title="@string/room_4" />
     <item
         android:id="@+id/room_5"
-        android:title="Room 5" />
+        android:title="@string/room_5" />
     <item
         android:id="@+id/room_6"
-        android:title="Room 6" />
+        android:title="@string/room_6" />
     <item
         android:id="@+id/room_7"
-        android:title="Room 7" />
+        android:title="@string/room_7" />
     <item
         android:id="@+id/room_8"
-        android:title="Room 8" />
+        android:title="@string/room_8" />
     <item
         android:id="@+id/room_9"
-        android:title="Room 9" />
+        android:title="@string/room_9" />
     <item
         android:id="@+id/room_10"
-        android:title="Room 10" />
+        android:title="@string/room_10" />
+    <item
+        android:id="@+id/no_filter"
+        android:title="@string/no_filter" />
 </menu>

@@ -4,6 +4,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="participants">participants</string>
+    <string name="room_1">Room 1</string>
+    <string name="room_2">Room 2</string>
+    <string name="room_3">Room 3</string>
+    <string name="room_4">Room 4</string>
+    <string name="room_5">Room 5</string>
+    <string name="room_6">Room 6</string>
+    <string name="room_7">Room 7</string>
+    <string name="room_8">Room 8</string>
+    <string name="room_9">Room 9</string>
+    <string name="room_10">Room 10</string>
+    <string name="no_filter">No filter</string>
 
     <string-array name="room_list">
         <item>Room 1</item>

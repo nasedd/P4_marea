@@ -10,12 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Arrays;
-import java.util.List;
-
 import fr.nazodev.p4_mareu.R;
 import fr.nazodev.p4_mareu.di.DI;
-import fr.nazodev.p4_mareu.service.MeetingApiService;
+import fr.nazodev.p4_mareu.repository.Repository;
 
 public class MeetingFragment extends Fragment {
 
@@ -49,8 +46,9 @@ public class MeetingFragment extends Fragment {
     }
 
     private void initList(){
-        MeetingApiService apiService = DI.getApiService();
+        Repository repository = DI.getRepository();
+
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new MeetingRecyclerViewAdapter(apiService.getMeetingList()));
+        recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
     }
 }

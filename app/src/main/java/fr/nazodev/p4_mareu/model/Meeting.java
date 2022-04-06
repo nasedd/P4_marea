@@ -11,6 +11,8 @@ public class Meeting {
     public String date;
     public String time;
 
+
+
     public Meeting(List<String> participants, String location, String subject, String date, String time){
         this.participants = participants;
         this.location = location;

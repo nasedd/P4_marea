@@ -2,7 +2,6 @@ package fr.nazodev.p4_mareu.user_interface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -11,27 +10,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
+
+import java.util.Calendar;
+import java.util.List;
 
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.di.DI;
+import fr.nazodev.p4_mareu.model.Meeting;
+import fr.nazodev.p4_mareu.model.Room;
+import fr.nazodev.p4_mareu.repository.Repository;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    Repository repository = DI.getRepository();
+    List<Meeting> meetingList = repository.getMeetingList();
+    MeetingFragment meetingFragment = new MeetingFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        repository.setFilteredList(repository.getMeetingList());
+
+
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
 
         FloatingActionButton addButton = findViewById(R.id.floating_action_button);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -39,10 +45,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), AddNewMeetingActivity.class);
                 startActivity(intent);
-
             }
         });
-
 
     }
 
@@ -53,54 +57,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.datePicker()
-                                                            .setTitleText("Select dates")
-                                                            .build();
-    MaterialTimePicker materialTimePicker =  new MaterialTimePicker.Builder()
-                                                                        .setTimeFormat(TimeFormat.CLOCK_24H)
-                                                                        .setHour(12)
-                                                                        .setMinute(10)
-                                                                        .build();
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.date_filter){
-            //buttonSelectDate();
-            materialDatePicker.show(getSupportFragmentManager(),"tag");
-            materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-                @Override public void onPositiveButtonClick(Object selection) {
+        repository.clearFilteredList();
 
-                    Toast.makeText(MainActivity.this, materialDatePicker.getHeaderText() + "-" ,Toast.LENGTH_SHORT).show();
+        Room selectedRoom = Room.findRoomById(item.getItemId());
 
-                }
-            });
+        if(selectedRoom != null){
+            filterRoom(getString(selectedRoom.getStringRoom()));
 
+        }else if(item.getItemId() == R.id.date_filter){
+            selectDate();
 
-
-
+        }else if(item.getItemId() == R.id.no_filter){
+            repository.setFilteredList(repository.getMeetingList());
+            refreshMeetingFragment();
         }
 
-        if(item.getItemId() == R.id.room_1){
-            materialTimePicker.show(getSupportFragmentManager(),"tag");
-            materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, materialTimePicker.getHour() + " : " + materialTimePicker.getMinute() ,Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-
-        }
         return super.onOptionsItemSelected(item);
     }
 
+    public void filterRoom(String room){
+        for(Meeting meeting: meetingList){
+            if(meeting.location.equals(room)){
+                repository.addFilteredList(meeting);
+            }
+        }
+        refreshMeetingFragment();
+    }
 
-
-
-
-
-
-    private void buttonSelectDate() {
+    private void selectDate() {
 
         // Date Select Listener.
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -109,17 +95,39 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear, int dayOfMonth) {
 
-                //editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                Toast.makeText(MainActivity.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year,Toast.LENGTH_SHORT).show();
+                String selectedDate = dayOfMonth + "/" + (monthOfYear+1);
+                if(monthOfYear<10){
+                    selectedDate = dayOfMonth + "/0" + (monthOfYear+1);
+                }
+                if(dayOfMonth <10){
+                    selectedDate = "0" + dayOfMonth + "/0" + (monthOfYear+1);
+                }
+                filterByDate(selectedDate);
             }
         };
-
-
-        // Show
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener, 2022,2,4);
+        // build
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        // show
         datePickerDialog.show();
-
     }
-}
 
-//Toast.makeText(MainActivity.this, "dayOfMonth + "-" + (monthOfYear + 1) + "-" + year",Toast.LENGTH_SHORT).show();
+    private void filterByDate(String selectedDate) {
+        for(Meeting meeting : meetingList){
+            if(meeting.date.equals(selectedDate)){
+                repository.addFilteredList(meeting);
+            }
+        }
+        refreshMeetingFragment();
+    }
+
+    private void refreshMeetingFragment(){
+        getSupportFragmentManager().beginTransaction().detach(meetingFragment).commit();
+        getSupportFragmentManager().beginTransaction().attach(meetingFragment).commit();
+    }
+
+
+}

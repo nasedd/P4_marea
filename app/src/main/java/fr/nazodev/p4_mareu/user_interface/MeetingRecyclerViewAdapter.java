@@ -15,11 +15,11 @@ import java.util.List;
 import fr.nazodev.p4_mareu.R;
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
-import fr.nazodev.p4_mareu.service.MeetingApiService;
+import fr.nazodev.p4_mareu.repository.Repository;
 
 public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.MyViewHolder> {
 
-    private MeetingApiService apiService = DI.getApiService();
+    private Repository repository = DI.getRepository();
     private final List<Meeting> items;
     public MeetingRecyclerViewAdapter(List<Meeting> items){ this.items = items ;  }
 
@@ -56,12 +56,11 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.location.setText(meeting.location);
         holder.date.setText(meeting.date);
         holder.time.setText(meeting.time);
-        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                apiService.deleteMeeting(meeting);
-                notifyItemRemoved(holder.getAdapterPosition());
-            }
+        holder.buttonDelete.setOnClickListener(v -> { //anonymous new View... can be replaced with lambda
+            repository.deleteMeeting(meeting);
+            //apiService.setFilteredList(apiService.getMeetingList()); ******* ça ne fonctionnent pas ! pk ?
+            repository.deleteFilteredList(meeting);
+            notifyItemRemoved(holder.getAdapterPosition());
         });
 
     }

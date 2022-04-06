@@ -13,7 +13,7 @@ import java.util.List;
 
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.R;
-import fr.nazodev.p4_mareu.service.MeetingApiService;
+import fr.nazodev.p4_mareu.repository.Repository;
 
 public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<ParticipantRecyclerViewAdapter.MyViewHolder>{
 
@@ -44,14 +44,10 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String item = emailList.get(position);
         holder.email.setText(emailList.get(position));
-        holder.delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MeetingApiService apiService;
-                apiService = DI.getApiService();
-                apiService.deleteEmail(item);
-                notifyItemRemoved(holder.getAdapterPosition());
-            }
+        holder.delete_button.setOnClickListener(v -> {
+            Repository repository = DI.getRepository();
+            repository.deleteEmail(item);
+            notifyItemRemoved(holder.getAdapterPosition());
         });
     }
 
