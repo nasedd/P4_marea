@@ -2,6 +2,7 @@ package fr.nazodev.p4_mareu.repository;
 
 import java.util.List;
 
+import fr.nazodev.p4_mareu.model.Meeting;
 import fr.nazodev.p4_mareu.service.MeetingApiService;
 import fr.nazodev.p4_mareu.service.FakeEmailApiService;
 
@@ -27,30 +28,30 @@ public class Repository {
     }
 
     //******** Meeting ********//
-    public List<fr.nazodev.p4_mareu.model.Meeting> getMeetingList(){
+    public List<Meeting> getMeetingList(){
         return apiService.getMeetingList();
     }
-    public void deleteMeeting(fr.nazodev.p4_mareu.model.Meeting meeting){
+    public void deleteMeeting(Meeting meeting){
         apiService.deleteMeeting(meeting);
     }
-    public void addMeeting(fr.nazodev.p4_mareu.model.Meeting meeting){
+    public void addMeeting(Meeting meeting){
         apiService.addMeeting(meeting);
     }
 
     //********** Filtered list *************//
-    public List<fr.nazodev.p4_mareu.model.Meeting> getFilteredList(){
+    public List<Meeting> getFilteredList(){
         return apiService.getFilteredList();
     }
-    public void addFilteredList(fr.nazodev.p4_mareu.model.Meeting meeting){
+    public void addFilteredList(Meeting meeting){
         apiService.addFilteredList(meeting);
     }
     public void clearFilteredList(){
         apiService.clearFilteredList();
     }
-    public void setFilteredList(List<fr.nazodev.p4_mareu.model.Meeting> list) {
+    public void setFilteredList(List<Meeting> list) {
         apiService.setFilteredList(list);
     }
-    public void deleteFilteredList(fr.nazodev.p4_mareu.model.Meeting meeting){
+    public void deleteFilteredList(Meeting meeting){
         apiService.deleteFilteredList(meeting);
     }
 }

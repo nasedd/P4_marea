@@ -36,13 +36,14 @@ public class MeetingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);
         recyclerView = (RecyclerView) view;
+        initList();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initList();
+        //initList(); // pourquoi init list ici ?
     }
 
     private void initList(){

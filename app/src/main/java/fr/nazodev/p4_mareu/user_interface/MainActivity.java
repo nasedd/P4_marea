@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         repository.setFilteredList(repository.getMeetingList());
 
 
-
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
 
         FloatingActionButton addButton = findViewById(R.id.floating_action_button);
@@ -63,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
         Room selectedRoom = Room.findRoomById(item.getItemId());
 
-        if(selectedRoom != null){
+        if (selectedRoom != null) {
             filterRoom(getString(selectedRoom.getStringRoom()));
 
-        }else if(item.getItemId() == R.id.date_filter){
+        } else if (item.getItemId() == R.id.date_filter) {
             selectDate();
 
-        }else if(item.getItemId() == R.id.no_filter){
+        } else if (item.getItemId() == R.id.no_filter) {
             repository.setFilteredList(repository.getMeetingList());
             refreshMeetingFragment();
         }
@@ -77,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void filterRoom(String room){
-        for(Meeting meeting: meetingList){
-            if(meeting.location.equals(room)){
+    public void filterRoom(String room) {
+        for (Meeting meeting : meetingList) {
+            if (meeting.location.equals(room)) {
                 repository.addFilteredList(meeting);
             }
         }
@@ -95,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear, int dayOfMonth) {
 
-                String selectedDate = dayOfMonth + "/" + (monthOfYear+1);
-                if(monthOfYear<10){
-                    selectedDate = dayOfMonth + "/0" + (monthOfYear+1);
+                String selectedDate = dayOfMonth + "/" + (monthOfYear + 1);
+                if (monthOfYear < 10) {
+                    selectedDate = dayOfMonth + "/0" + (monthOfYear + 1);
                 }
-                if(dayOfMonth <10){
-                    selectedDate = "0" + dayOfMonth + "/0" + (monthOfYear+1);
+                if (dayOfMonth < 10) {
+                    selectedDate = "0" + dayOfMonth + "/0" + (monthOfYear + 1);
                 }
                 filterByDate(selectedDate);
             }
@@ -116,15 +115,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void filterByDate(String selectedDate) {
-        for(Meeting meeting : meetingList){
-            if(meeting.date.equals(selectedDate)){
+        for (Meeting meeting : meetingList) {
+            if (meeting.date.equals(selectedDate)) {
                 repository.addFilteredList(meeting);
             }
         }
         refreshMeetingFragment();
     }
 
-    private void refreshMeetingFragment(){
+    private void refreshMeetingFragment() {
         getSupportFragmentManager().beginTransaction().detach(meetingFragment).commit();
         getSupportFragmentManager().beginTransaction().attach(meetingFragment).commit();
     }

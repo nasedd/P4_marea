@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">-->
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".user_interface.AddNewMeetingActivity">
 
         <LinearLayout
@@ -40,7 +40,7 @@
                     android:id="@+id/edittext_participants"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionDone|flagNoExtractUi"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,14 +58,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="location"
                 app:startIconDrawable="@drawable/ic_location">
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:inputType="none"
                     android:text="Choose the meeting room" />
 
@@ -84,7 +82,8 @@
                     android:id="@+id/editTextSubject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailSubject" />
+                    android:inputType="textEmailSubject"
+                    android:imeOptions="flagNoExtractUi"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +99,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="none"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,4 +134,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--</ScrollView>-->
+</ScrollView>

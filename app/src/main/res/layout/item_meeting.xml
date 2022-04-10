@@ -41,7 +41,8 @@
         app:layout_constraintBottom_toTopOf="@+id/textView_email"
         app:layout_constraintEnd_toStartOf="@+id/tiret"
         app:layout_constraintStart_toEndOf="@+id/ic_disc"
-        app:layout_constraintTop_toTopOf="@+id/ic_disc" />
+        app:layout_constraintTop_toTopOf="@+id/ic_disc"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tiret"
@@ -118,13 +119,14 @@
         android:id="@+id/textView_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="jean.yve@exemple.com, nadir.seddaoui@gmail.com, openclassroom@gmail.com"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/ic_disc"
         app:layout_constraintEnd_toEndOf="@+id/textView_location"
-        app:layout_constraintStart_toStartOf="@+id/textView_subject"
-        app:layout_constraintTop_toBottomOf="@+id/textView_subject" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_subject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
