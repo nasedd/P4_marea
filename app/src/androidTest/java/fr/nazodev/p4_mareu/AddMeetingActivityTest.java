@@ -45,7 +45,6 @@ public class AddMeetingActivityTest {
     private static final int MONTH_OF_YEAR = 3;
     private static final int DAY_OF_MONTH = 4;
     @Rule
-    //public ActivityScenarioRule<AddNewMeetingActivity> scenarioRule = new ActivityScenarioRule<>(AddNewMeetingActivity.class);
     public ActivityTestRule<AddNewMeetingActivity> scenarioRule = new ActivityTestRule<>(AddNewMeetingActivity.class);
 
     @Test
@@ -100,7 +99,7 @@ public class AddMeetingActivityTest {
         onView(withId(R.id.button_validation_new_meeting)).perform(click());
         onView((withId(R.id.recyclerView))).check(new RecyclerViewItemCountAssertion(ITEMS_COUNT+1));
     }
-    
+
 
     public static ViewAction setTime(final int hour, final int minute) {
         return new ViewAction() {

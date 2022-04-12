@@ -58,10 +58,13 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.time.setText(meeting.time);
         holder.buttonDelete.setOnClickListener(v -> {
             repository.deleteMeeting(meeting);
-            repository.setFilteredList(repository.getMeetingList());// lists are well updated but not the display. Why ?
+            repository.setFilteredList(repository.getMeetingList());
             //repository.deleteFilteredList(meeting);
-            notifyItemRemoved(holder.getAdapterPosition());
-            MeetingFragment.recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
+            items.remove(position); //remove item in local data
+            //notify work with local data
+            notifyItemRemoved(position);
+
+           // MeetingFragment.recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
         });
 
     }
