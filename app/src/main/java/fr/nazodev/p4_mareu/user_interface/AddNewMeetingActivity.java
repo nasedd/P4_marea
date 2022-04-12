@@ -23,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -103,12 +102,26 @@ public class AddNewMeetingActivity extends AppCompatActivity {
 
         //****************** set Date *******************************//
         EditText dateEditText = findViewById(R.id.editTextDate);
-        dateEditText.setInputType(InputType.TYPE_NULL); //defining the input type via xml did not work.
-        selectDate(dateEditText);
+        dateEditText.setInputType(InputType.TYPE_NULL); //defining the input type via xml did not work. Why ?
+        selectDate(dateEditText); //listener inside function
 
         //****************** set Time *******************************//
         EditText timeEditText = findViewById(R.id.editTextTime);
-        setTime(timeEditText);
+
+        timeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    setTime(timeEditText);
+                }
+            }
+        });
+        timeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTime(timeEditText);
+            }
+        });
 
         //********************** Validation button -> create the new meeting *********************//
         Button validationButton = findViewById(R.id.button_validation_new_meeting);
@@ -156,11 +169,7 @@ public class AddNewMeetingActivity extends AppCompatActivity {
 
     private boolean isEmailValidate(Editable email) {
         String emailInput = email.toString();
-        if (!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches();
     }
 
     private void setTime(EditText editText) {
@@ -171,20 +180,8 @@ public class AddNewMeetingActivity extends AppCompatActivity {
                 .setMinute(10)
                 .build();
 
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    materialTimePicker.show(getSupportFragmentManager(), "tag");
-                }
-            }
-        });
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialTimePicker.show(getSupportFragmentManager(), "tag");
-            }
-        });
+        materialTimePicker.show(getSupportFragmentManager(), "tag");
+
         materialTimePicker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,13 +201,7 @@ public class AddNewMeetingActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year,
                                   int monthOfYear, int dayOfMonth) {
 
-                String date = dayOfMonth + "/" + (monthOfYear + 1);
-                if (monthOfYear < 10) {
-                    date = dayOfMonth + "/0" + (monthOfYear + 1);
-                }
-                if (dayOfMonth < 10) {
-                    date = "0" + dayOfMonth + "/0" + (monthOfYear + 1);
-                }
+                String date = formatDate(dayOfMonth,monthOfYear);
                 editText.setText(date);
             }
         };
@@ -231,6 +222,17 @@ public class AddNewMeetingActivity extends AppCompatActivity {
         //********** show Date Picker if editText get clicked ****************//
         editText.setOnClickListener(v -> datePickerDialog.show());
 
+    }
+
+    public static String formatDate(int dayOfMonth, int monthOfYear) {
+        String date = dayOfMonth + "/" + (monthOfYear + 1);
+        if (monthOfYear < 10) {
+            date = dayOfMonth + "/0" + (monthOfYear + 1);
+        }
+        if (dayOfMonth < 10) {
+            date = "0" + dayOfMonth + "/0" + (monthOfYear + 1);
+        }
+        return date;
     }
 
     @Override

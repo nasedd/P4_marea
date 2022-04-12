@@ -56,11 +56,12 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.location.setText(meeting.location);
         holder.date.setText(meeting.date);
         holder.time.setText(meeting.time);
-        holder.buttonDelete.setOnClickListener(v -> { //anonymous new View... can be replaced with lambda
+        holder.buttonDelete.setOnClickListener(v -> {
             repository.deleteMeeting(meeting);
-            //apiService.setFilteredList(apiService.getMeetingList()); ******* ça ne fonctionnent pas ! pk ?
-            repository.deleteFilteredList(meeting);
+            repository.setFilteredList(repository.getMeetingList());// lists are well updated but not the display. Why ?
+            //repository.deleteFilteredList(meeting);
             notifyItemRemoved(holder.getAdapterPosition());
+            MeetingFragment.recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
         });
 
     }

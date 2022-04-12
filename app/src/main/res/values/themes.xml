@@ -15,7 +15,7 @@
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
     </style>
     <style name="MyActionButtonOverflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_filter</item>
+<!--        <item name="android:src">@drawable/ic_filter</item>-->
     </style>
 
 </resources>

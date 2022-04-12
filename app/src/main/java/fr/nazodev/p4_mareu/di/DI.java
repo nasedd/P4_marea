@@ -16,6 +16,7 @@ public class DI {
 
     public static Repository getRepository(){
         return new Repository(service, service2);
+        //return new Repository(new FakeMeetingApiService(), new FakeEmailApiService());
     }
 
     /**

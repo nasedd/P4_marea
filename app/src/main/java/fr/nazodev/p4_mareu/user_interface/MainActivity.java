@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("MainActivity", "onCreate Called");
 
         repository.setFilteredList(repository.getMeetingList());
+        Toast.makeText(this,"MainActivity : meeting list size = "+repository.getMeetingList().size(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"MainActivity : FilteredList size = "+repository.getFilteredList().size(),Toast.LENGTH_SHORT).show();
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(v.getContext(),"size = "+repository.getMeetingList().size(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), AddNewMeetingActivity.class);
                 startActivity(intent);
             }
@@ -128,5 +135,45 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().attach(meetingFragment).commit();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("MainActivity", "onStart Called");
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainActivity", "onResume Called");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("MainActivity", "onPause Called");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("MainActivity", "onStop Called");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("MainActivity", "onSaveInstanceState Called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //finish();
+        Log.d("MainActivity", "onDestroy Called");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("MainActivity", "onRestart Called");
+    }
 }
