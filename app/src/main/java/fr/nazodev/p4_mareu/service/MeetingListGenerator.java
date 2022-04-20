@@ -19,9 +19,10 @@ public class MeetingListGenerator {
     //**************** Meeting list ********************//
 
     public static List<Meeting> MEETING_LIST = Arrays.asList(
-            new Meeting(Arrays.asList("jean-yve@gmail.com","toto@exemple.fr","sangokou@dbz.com"),"Room 2","New project debrief","24/12","9h30"),
+            new Meeting(Arrays.asList("jean-yve@gmail.com","toto@exemple.fr","sangokou@dbz.com"),"Room 2","Noël !","24/12","9h30"),
             new Meeting(Arrays.asList("maxim@lamzon.com","alex@lamzon.com","amandin@lamzon.com"),"Room 1","CDC-02 product pharma","01/01","5h00"),
-            new Meeting(Arrays.asList("paul@lamzon.com","vivian@lamzon.com","luc@lamzon.com"),"Room 10","hebdo meeting","04/03","9h30")
+            new Meeting(Arrays.asList("paul@lamzon.com","vivian@lamzon.com","luc@lamzon.com"),"Room 10","hebdo meeting","04/03","9h30"),
+            new Meeting(Arrays.asList("jean-yve@gmail.com","toto@exemple.fr","sangokou@dbz.com"),"Room 7","Noël !","24/12","23h59")
     );
     static List<Meeting> generateMeetingList() { return new ArrayList<>(MEETING_LIST); }
 

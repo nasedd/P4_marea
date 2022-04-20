@@ -79,7 +79,7 @@ public class MainActivityInstrumentedTest {
 
         onView(withId(R.id.floating_action_button)).perform(click());
 
-        //methode 1 :
+        //methode 1 : use with setup() or if no setup use ->IntentsTestRule instead of ->ActivityTestRule
 
         Intents.intended(hasComponent(AddNewMeetingActivity.class.getName()));
 

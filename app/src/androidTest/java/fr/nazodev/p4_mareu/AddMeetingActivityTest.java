@@ -11,7 +11,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static fr.nazodev.p4_mareu.MainActivityInstrumentedTest.ITEMS_COUNT;
 import static fr.nazodev.p4_mareu.user_interface.AddNewMeetingActivity.formatDate;
 import static fr.nazodev.p4_mareu.utils.RecyclerViewItemCountAssertion.expectedItemCount;
 
@@ -33,6 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.user_interface.AddNewMeetingActivity;
 import fr.nazodev.p4_mareu.utils.RecyclerViewItemCountAssertion;
 
@@ -44,6 +44,8 @@ public class AddMeetingActivityTest {
     private static final int YEAR = 2022;
     private static final int MONTH_OF_YEAR = 3;
     private static final int DAY_OF_MONTH = 4;
+    private static final int ITEMS_COUNT = 3;
+
     @Rule
     public ActivityTestRule<AddNewMeetingActivity> scenarioRule = new ActivityTestRule<>(AddNewMeetingActivity.class);
 
@@ -92,12 +94,16 @@ public class AddMeetingActivityTest {
 
     @Test
     public void CreateNewMeetingButton_shouldAddNewMeeting(){
+
         onView(withId(R.id.autoCompleteTextView)).perform(replaceText("Room 1"));
         onView(withId(R.id.editTextSubject)).perform(replaceText("subject of the day..."));
         onView(withId(R.id.editTextDate)).perform(replaceText("04/03"));
         onView(withId(R.id.editTextTime)).perform(replaceText("10:10"));
+
+        int itemsCount = DI.getRepository().getMeetingList().size();
+
         onView(withId(R.id.button_validation_new_meeting)).perform(click());
-        onView((withId(R.id.recyclerView))).check(new RecyclerViewItemCountAssertion(ITEMS_COUNT+1));
+        onView((withId(R.id.recyclerView))).check(new RecyclerViewItemCountAssertion(itemsCount+1));
     }
 
 

@@ -27,6 +27,7 @@ import fr.nazodev.p4_mareu.repository.Repository;
 
 public class MainActivity extends AppCompatActivity {
 
+
     Repository repository = DI.getRepository();
     List<Meeting> meetingList = repository.getMeetingList();
     MeetingFragment meetingFragment = new MeetingFragment();
@@ -38,9 +39,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onCreate Called");
 
         repository.setFilteredList(repository.getMeetingList());
-        Toast.makeText(this,"MainActivity : meeting list size = "+repository.getMeetingList().size(),Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,"MainActivity : FilteredList size = "+repository.getFilteredList().size(),Toast.LENGTH_SHORT).show();
-
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (item.getItemId() == R.id.no_filter) {
             repository.setFilteredList(repository.getMeetingList());
-            refreshMeetingFragment();
+            MeetingFragment.initList();
         }
 
         return super.onOptionsItemSelected(item);
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 repository.addFilteredList(meeting);
             }
         }
-        refreshMeetingFragment();
+        MeetingFragment.initList();
     }
 
     private void selectDate() {
@@ -127,9 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 repository.addFilteredList(meeting);
             }
         }
-        refreshMeetingFragment();
+        MeetingFragment.initList();
+
     }
 
+    //replaced by MeetingFragment.initList()
     private void refreshMeetingFragment() {
         getSupportFragmentManager().beginTransaction().detach(meetingFragment).commit();
         getSupportFragmentManager().beginTransaction().attach(meetingFragment).commit();

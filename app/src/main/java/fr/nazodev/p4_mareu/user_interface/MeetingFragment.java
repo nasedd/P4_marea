@@ -18,15 +18,14 @@ import fr.nazodev.p4_mareu.repository.Repository;
 public class MeetingFragment extends Fragment {
 
     public static RecyclerView recyclerView;
-    Repository repository = DI.getRepository();
+    static Repository repository = DI.getRepository();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_meeting, container, false);
         recyclerView = (RecyclerView) view;
-        Toast.makeText(view.getContext(),"Fragment : meeting list size = "+repository.getMeetingList().size(),Toast.LENGTH_SHORT).show();
-        Toast.makeText(view.getContext(),"Fragment : FilteredList size = "+repository.getFilteredList().size(),Toast.LENGTH_SHORT).show();
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         initList();
         return view;
@@ -38,9 +37,7 @@ public class MeetingFragment extends Fragment {
         //initList(); // pourquoi init list ici ? dans le P3 c'était fait ici
     }
 
-    private void initList(){
-
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+    public static void initList(){
         recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
     }
 }

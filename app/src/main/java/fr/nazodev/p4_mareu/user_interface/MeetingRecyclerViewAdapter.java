@@ -23,6 +23,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     private final List<Meeting> items;
     public MeetingRecyclerViewAdapter(List<Meeting> items){ this.items = items ;  }
 
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView emails;
         public TextView subject;
