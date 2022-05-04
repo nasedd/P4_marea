@@ -31,12 +31,6 @@ public class MeetingFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //initList(); // pourquoi init list ici ? dans le P3 c'était fait ici
-    }
-
     public static void initList(){
         recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
     }

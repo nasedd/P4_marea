@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         repository.clearFilteredList();
 
-        Room selectedRoom = Room.findRoomById(item.getItemId());
+        Room selectedRoom = Room.findRoomById(item.getItemId()); //je recupère la room selectionner
 
         if (selectedRoom != null) {
-            filterRoom(getString(selectedRoom.getStringRoom()));
+            filterRoom(getString(selectedRoom.getStringRoom())); // je l'utilise dans ma fonction FilterRoom
 
         } else if (item.getItemId() == R.id.date_filter) {
             selectDate();
@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterRoom(String room) {
-        for (Meeting meeting : meetingList) {
-            if (meeting.location.equals(room)) {
-                repository.addFilteredList(meeting);
+        for (Meeting meeting : meetingList) { //dans la liste de reunion ...
+            if (meeting.location.equals(room)) { // what meeting use this room ?
+                repository.addFilteredList(meeting); // pour chaque element de ma list qui utilise room
             }
         }
         MeetingFragment.initList();

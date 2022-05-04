@@ -84,6 +84,7 @@ public class AddNewMeetingActivity extends AppCompatActivity {
 
         //******************* ROOM dropdown menu **********************//
         AutoCompleteTextView dropdownLocation = findViewById(R.id.autoCompleteTextView);
+        //usage in OnResume()
 
 
         //***************** subject input ************************//
