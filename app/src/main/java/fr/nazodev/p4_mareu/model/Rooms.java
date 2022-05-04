@@ -3,7 +3,7 @@ package fr.nazodev.p4_mareu.model;
 
 import fr.nazodev.p4_mareu.R;
 
-public enum Room {
+public enum Rooms {
     ROOM1(R.id.room_1,R.string.room_1),
     ROOM2(R.id.room_2,R.string.room_2),
     ROOM3(R.id.room_3,R.string.room_3),
@@ -26,13 +26,13 @@ public enum Room {
     private final int idRoom;
     private final int stringRoom;
 
-    Room(int idRoom, int stringRoom){
+    Rooms(int idRoom, int stringRoom){
         this.idRoom = idRoom;
         this.stringRoom = stringRoom;
     }
 
-    public static Room findRoomById(int idRoom){
-        for(Room room: values()){
+    public static Rooms findRoomById(int idRoom){
+        for(Rooms room: values()){
             if(room.idRoom == idRoom){
                 return room;
             }

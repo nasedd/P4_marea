@@ -1,19 +1,26 @@
 package fr.nazodev.p4_mareu.repository;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
+import fr.nazodev.p4_mareu.database.AppDatabase;
+import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
+import fr.nazodev.p4_mareu.service.EmailApiService;
 import fr.nazodev.p4_mareu.service.MeetingApiService;
 import fr.nazodev.p4_mareu.service.FakeEmailApiService;
 
 public class Repository {
 
     private final MeetingApiService apiService;
-    private final FakeEmailApiService apiService2;
+    private final EmailApiService apiService2;
+    private final AppDatabase appDatabase;
 
-    public Repository(MeetingApiService apiService, FakeEmailApiService apiService2) {
+    public Repository(MeetingApiService apiService, EmailApiService apiService2, AppDatabase appDatabase) {
         this.apiService = apiService;
         this.apiService2 = apiService2;
+        this.appDatabase = appDatabase;
     }
 
     //******* Email ***********//
@@ -28,18 +35,27 @@ public class Repository {
     }
 
     //******** Meeting ********//
-    public List<Meeting> getMeetingList(){
-        return apiService.getMeetingList();
+    public LiveData<List<Meeting>> getMeetingList(){
+        return appDatabase.meetingDao().getMeetingList();
     }
+
     public void deleteMeeting(Meeting meeting){
-        apiService.deleteMeeting(meeting);
+        Thread thread1 = new Thread(){
+            public void run(){  appDatabase.meetingDao().deleteMeeting(meeting); }
+        };
+        thread1.start();
+
     }
     public void addMeeting(Meeting meeting){
-        apiService.addMeeting(meeting);
+        Thread thread2 = new Thread(){
+            public void run(){  appDatabase.meetingDao().addMeeting(meeting); }
+        };
+        thread2.start();
     }
 
     //********** Filtered list *************//
     public List<Meeting> getFilteredList(){
+
         return apiService.getFilteredList();
     }
     public void addFilteredList(Meeting meeting){

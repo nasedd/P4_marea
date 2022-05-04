@@ -2,11 +2,15 @@ package fr.nazodev.p4_mareu.user_interface;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
+
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,21 +20,25 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.database.AppDatabase;
+import fr.nazodev.p4_mareu.database.MeetingDao;
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
-import fr.nazodev.p4_mareu.model.Room;
+import fr.nazodev.p4_mareu.model.Rooms;
 import fr.nazodev.p4_mareu.repository.Repository;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    Repository repository = DI.getRepository();
-    List<Meeting> meetingList = repository.getMeetingList();
-    MeetingFragment meetingFragment = new MeetingFragment();
+    Repository repository;// = DI.getRepository();
+    List<Meeting> meetingList;// = repository.getMeetingList();
+    MeetingFragment meetingFragment;
+    AppDatabase appDatabase;
+    MeetingViewModel meetingViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("MainActivity", "onCreate Called");
 
-        repository.setFilteredList(repository.getMeetingList());
+        meetingFragment = new MeetingFragment();
+        appDatabase = DI.instantiateAppDatabase(this); // need instantiate database before using repository bc repository use database
+        meetingViewModel = new ViewModelProvider(this).get(MeetingViewModel.class);
+        repository = DI.getRepository();
+        //meetingList = repository.getMeetingList();
+
+        meetingViewModel.meetingList.observe( this, meetings -> repository.setFilteredList(meetings));
+
+
+        //meetingViewModel.getMeetingList().observe(this, meetingList -> repository.setFilteredList(meetingList));
+        //repository.setFilteredList(repository.getMeetingList());
+        //repository.setFilteredList(meetingViewModel.getMeetingList());
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
 
@@ -46,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"size = "+repository.getMeetingList().size(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), AddNewMeetingActivity.class);
                 startActivity(intent);
             }
@@ -65,29 +83,30 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         repository.clearFilteredList();
 
-        Room selectedRoom = Room.findRoomById(item.getItemId()); //je recupère la room selectionner
+        Rooms selectedRoom = Rooms.findRoomById(item.getItemId());
 
         if (selectedRoom != null) {
-            filterRoom(getString(selectedRoom.getStringRoom())); // je l'utilise dans ma fonction FilterRoom
+            filterRoom(getString(selectedRoom.getStringRoom()));
 
         } else if (item.getItemId() == R.id.date_filter) {
             selectDate();
 
         } else if (item.getItemId() == R.id.no_filter) {
-            repository.setFilteredList(repository.getMeetingList());
-            MeetingFragment.initList();
+            meetingViewModel.getMeetingList();
+            //repository.setFilteredList(meetingViewModel.getMeetingList().getValue());
+            //meetingFragment.initList();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void filterRoom(String room) {
-        for (Meeting meeting : meetingList) { //dans la liste de reunion ...
-            if (meeting.location.equals(room)) { // what meeting use this room ?
-                repository.addFilteredList(meeting); // pour chaque element de ma list qui utilise room
+        for (Meeting meeting : meetingList) {
+            if (meeting.location.equals(room)) {
+                repository.addFilteredList(meeting);
             }
         }
-        MeetingFragment.initList();
+        //meetingFragment.initList();
     }
 
     private void selectDate() {
@@ -125,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 repository.addFilteredList(meeting);
             }
         }
-        MeetingFragment.initList();
+        //meetingFragment.initList();
 
     }
 

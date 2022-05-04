@@ -8,11 +8,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import fr.nazodev.p4_mareu.R;
+import fr.nazodev.p4_mareu.database.AppDatabase;
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
 import fr.nazodev.p4_mareu.repository.Repository;
@@ -20,6 +23,7 @@ import fr.nazodev.p4_mareu.repository.Repository;
 public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.MyViewHolder> {
 
     private Repository repository = DI.getRepository();
+
     private final List<Meeting> items;
     public MeetingRecyclerViewAdapter(List<Meeting> items){ this.items = items ;  }
 
@@ -59,7 +63,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
         holder.time.setText(meeting.time);
         holder.buttonDelete.setOnClickListener(v -> {
             repository.deleteMeeting(meeting);
-            repository.setFilteredList(repository.getMeetingList());
+            repository.setFilteredList(repository.getMeetingList().getValue());
             //repository.deleteFilteredList(meeting);
             items.remove(position); //remove item in local data
             //notify work with local data

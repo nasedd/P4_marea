@@ -8,8 +8,12 @@ import static org.junit.Assert.*;
 import static fr.nazodev.p4_mareu.service.MeetingListGenerator.EMAIL_LIST;
 import static fr.nazodev.p4_mareu.service.MeetingListGenerator.MEETING_LIST;
 
+import androidx.room.Room;
+import androidx.test.InstrumentationRegistry;
+
 import java.util.List;
 
+import fr.nazodev.p4_mareu.database.AppDatabase;
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.model.Meeting;
 import fr.nazodev.p4_mareu.repository.Repository;
@@ -23,9 +27,12 @@ import fr.nazodev.p4_mareu.service.MeetingListGenerator;
 public class RepositoryUnitTest {
 
     private Repository repository;
+    private AppDatabase appDatabase;
 
     @Before
-    public void setup() { repository = DI.getNewInstanceOfRepository(); }
+    public void setup() {
+        repository = DI.getNewInstanceOfRepository();
+    }
 
 
     @Test

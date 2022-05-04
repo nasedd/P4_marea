@@ -29,6 +29,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import fr.nazodev.p4_mareu.database.AppDatabase;
 import fr.nazodev.p4_mareu.di.DI;
 import fr.nazodev.p4_mareu.R;
 import fr.nazodev.p4_mareu.model.Meeting;
@@ -84,7 +85,6 @@ public class AddNewMeetingActivity extends AppCompatActivity {
 
         //******************* ROOM dropdown menu **********************//
         AutoCompleteTextView dropdownLocation = findViewById(R.id.autoCompleteTextView);
-        //usage in OnResume()
 
 
         //***************** subject input ************************//
@@ -147,6 +147,7 @@ public class AddNewMeetingActivity extends AppCompatActivity {
                 timeEditText.requestFocus();
 
             } else {
+
                 repository.addMeeting(new Meeting(
                         emailList,
                         dropdownLocation.getEditableText().toString(),
