@@ -37,14 +37,8 @@ public class MeetingFragment extends Fragment {
         recyclerView = (RecyclerView) view;
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        meetingViewModel.filteredList.observe(getViewLifecycleOwner(),lists -> recyclerView.setAdapter(new MeetingRecyclerViewAdapter( lists )));
-        //initList();
+        meetingViewModel.filteredList.observe(getViewLifecycleOwner(),list -> recyclerView.setAdapter(new MeetingRecyclerViewAdapter( list )));
 
         return view;
     }
-
-    //private void initList(){
-
-       // recyclerView.setAdapter(new MeetingRecyclerViewAdapter(repository.getFilteredList()));
-    //}
 }

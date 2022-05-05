@@ -15,11 +15,13 @@ public class MeetingViewModel extends ViewModel {
     private final Repository repository = DI.getRepository();
 
     LiveData<List<Meeting>> meetingList = repository.getMeetingList();
-    MutableLiveData<List<Meeting>> filteredList = new MutableLiveData<>();
+    LiveData<List<Meeting>> filteredList;
 
 
+    public LiveData<List<Meeting>> getMeetingList(){ return repository.getMeetingList(); }
+    public void initFilteredList() { filteredList = getMeetingList(); }
 
-    public void getMeetingList(){ filteredList = repository.getMeetingList(); }
+
 
     public void deleteMeeting(Meeting meeting){ repository.deleteMeeting(meeting);}
 

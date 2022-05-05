@@ -50,14 +50,9 @@ public class MainActivity extends AppCompatActivity {
         appDatabase = DI.instantiateAppDatabase(this); // need instantiate database before using repository bc repository use database
         meetingViewModel = new ViewModelProvider(this).get(MeetingViewModel.class);
         repository = DI.getRepository();
-        //meetingList = repository.getMeetingList();
-
-        meetingViewModel.meetingList.observe( this, meetings -> repository.setFilteredList(meetings));
 
 
-        //meetingViewModel.getMeetingList().observe(this, meetingList -> repository.setFilteredList(meetingList));
-        //repository.setFilteredList(repository.getMeetingList());
-        //repository.setFilteredList(meetingViewModel.getMeetingList());
+        meetingViewModel.initFilteredList();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, meetingFragment).commit();
 
@@ -92,22 +87,21 @@ public class MainActivity extends AppCompatActivity {
             selectDate();
 
         } else if (item.getItemId() == R.id.no_filter) {
-            meetingViewModel.getMeetingList();
-            //repository.setFilteredList(meetingViewModel.getMeetingList().getValue());
-            //meetingFragment.initList();
+            meetingViewModel.initFilteredList();
         }
 
         return super.onOptionsItemSelected(item);
     }
-
     public void filterRoom(String room) {
         for (Meeting meeting : meetingList) {
             if (meeting.location.equals(room)) {
+                meetingViewModel.filteredList.observe(this, filteredList -> filteredList.add(meeting));
                 repository.addFilteredList(meeting);
             }
         }
-        //meetingFragment.initList();
     }
+
+
 
     private void selectDate() {
 
